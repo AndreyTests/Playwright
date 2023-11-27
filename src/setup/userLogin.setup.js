@@ -13,6 +13,5 @@ test("Login as user and save storage state", async ({page, context})=>{
     await context.storageState({
         path: STORAGE_STATE_USER_PATH
     });
-
     console.log('the login is done and auth state is saved')
 })

@@ -1,4 +1,4 @@
-import {test as base} from "@playwright/test";
+import {test as base, request} from "@playwright/test";
 import {STORAGE_STATE_USER_PATH} from "../data/storageState";
 import ProfilePage from "../pages/ProfilePage";
 import GaragePage from "../pages/GaragePage";
@@ -20,8 +20,14 @@ export const test = base.extend({
             const page = await contextData.newPage();
             const garagePage = new GaragePage(page);
             await garagePage.navigate();
-
             await use(garagePage);
+        },
+    userApiClient: async({}, use) => {
+        const contextData = await request.newContext({
+            storageState: STORAGE_STATE_USER_PATH
+        });
+        await use(contextData);
+        await contextData.dispose();
         }
     }
 )
