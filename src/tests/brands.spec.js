@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 
 import { test } from '../fixtures/test.fixtures';
-import {CUSTOM_BRANDS_RESPONSE_BODY, DEFAULT_BRANDS_RESPONSE_BODY} from "../data/brands";
-import {DEFAULT_BRAND_MODELS} from "../data/models";
+import {CUSTOM_BRANDS_RESPONSE_BODY, DEFAULT_BRANDS_RESPONSE_BODY} from "./fixtures/brands";
+import {DEFAULT_BRAND_MODELS} from "./fixtures/models";
 test.describe("API requests", ()=> {
     test("Check the list of brands", async ({userApiClient}) => {
             const response = await userApiClient.fetch('/api/cars/brands');
