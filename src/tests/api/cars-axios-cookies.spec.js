@@ -30,7 +30,7 @@ test.describe("API requests with axios and cookies jar", ()=> {
         });
 
     });
-    test.only("Check the FIRST car of a current user", async ({userApiClient}) => {
+    test("Check the FIRST car of a current user", async ({userApiClient}) => {
         const userFirstCarId = FIRST_USER_CAR_RESPONSE_BODY.data.id;
         const response = await client.get(`cars/${userFirstCarId}`);
 
