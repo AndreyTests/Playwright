@@ -1,5 +1,4 @@
 import BaseController from "./BaseController.js";
-import {FIRST_USER_CAR_RESPONSE_BODY, userCarIDUpdate} from "../tests/fixtures/cars.js";
 
 export default class CarController extends BaseController{
     #USER_CARS_PATH = '/cars';
@@ -7,7 +6,6 @@ export default class CarController extends BaseController{
     #USER_CARS_BRANDS_PATH = '/cars/brands';
     #USER_CARS_BRANDS_BY_ID_PATH = '/cars/brands/#';
     #USER_CARS_MODELS_PATH = '/cars/models';
-    #USER_CARS_MODELS_BY_ID_PATH = '/cars/models/#';
 
     constructor(options) {
         super(options)
@@ -35,17 +33,6 @@ export default class CarController extends BaseController{
 
     async getUserCarModels(){
         return this._client.get(this.#USER_CARS_MODELS_PATH);
-    }
-
-    async getUserCarModelsById(id){
-        return this._client.get(this.#USER_CARS_MODELS_BY_ID_PATH.replace('#', id));
-    }
-    async getSpecificCarId(){
-        const response = await this._client.get(this.#USER_CARS_PATH);
-        const car = response.data.data.filter(el => el.id != FIRST_USER_CAR_RESPONSE_BODY.data.id
-            && el.id != userCarIDUpdate);
-        return car[0].id;
-
     }
 
     async deleteCarById(id){
