@@ -9,6 +9,7 @@ import axios from "axios";
 import {FIRST_USER_CAR_RESPONSE_BODY} from "../fixtures/cars.js";
 import {config as testConfig} from "../../../config/config.js";
 import {USER} from "../../data/users.js";
+
 test.describe("API requests with axios and cookies jar", ()=> {
     /* HOMEWORK IMPLEMENTATION */
     let client;
@@ -30,14 +31,14 @@ test.describe("API requests with axios and cookies jar", ()=> {
         });
 
     });
-    test.only("Check the FIRST car of a current user", async ({userApiClient}) => {
+    test("Check the FIRST car of a current user", async () => {
         const userFirstCarId = FIRST_USER_CAR_RESPONSE_BODY.data.id;
         const response = await client.get(`cars/${userFirstCarId}`);
 
         expect(response.status, 'should return 200 status code').toEqual(200);
         expect(response.data, 'should return default brands').toEqual(FIRST_USER_CAR_RESPONSE_BODY);
     });
-    test("Create the BMW car with specific model: X5", async ({userApiClient}) => {
+    test("Create the BMW car with specific model: X5", async () => {
         const brandId = DEFAULT_BRANDS_RESPONSE_BODY.data[1].id;
         const modelId = DEFAULT_BRAND_MODELS[brandId].data[2].id;
 
