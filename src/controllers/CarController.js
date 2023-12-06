@@ -6,6 +6,7 @@ export default class CarController extends BaseController{
     #USER_CARS_BRANDS_PATH = '/cars/brands';
     #USER_CARS_BRANDS_BY_ID_PATH = '/cars/brands/#';
     #USER_CARS_MODELS_PATH = '/cars/models';
+    #USER_CARS_MODELS_BY_ID_PATH = '/cars/models/#';
 
     constructor(options) {
         super(options)
@@ -33,6 +34,10 @@ export default class CarController extends BaseController{
 
     async getUserCarModels(){
         return this._client.get(this.#USER_CARS_MODELS_PATH);
+    }
+
+    async getUserCarModelsById(id){
+        return this._client.get(this.#USER_CARS_MODELS_BY_ID_PATH.replace('#', id));
     }
 
     async deleteCarById(id){
