@@ -34,6 +34,8 @@ test.describe("API requests", ()=> {
         await expect(response.status(), 'should return 201 status code').toEqual(201);
         expect(body.status).toBe('ok');
         expect(body.data, 'valid car created').toMatchObject(requestData);
+
+        await userApiClient.delete(`/api/cars/${body.data.id}`);
     });
     test("Create the FIAT car with specific model: Punto", async ({userApiClient}) => {
         const brandId = DEFAULT_BRANDS_RESPONSE_BODY.data[4].id;
@@ -54,6 +56,9 @@ test.describe("API requests", ()=> {
         await expect(response.status(), 'should return 201 status code').toEqual(201);
         expect(body.status).toBe('ok');
         expect(body.data, 'valid car created').toMatchObject(requestData);
+
+        await userApiClient.delete(`/api/cars/${body.data.id}`);
+
     });
     test("Check POST request with invalid brand", async ({userApiClient}) => {
         const brandId = '41';
