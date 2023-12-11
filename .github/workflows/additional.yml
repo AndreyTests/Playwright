@@ -1,0 +1,66 @@
+name: "Automated tests with github container"
+on: push
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.39.0-jammy
+    steps:
+      - name: "Checkout to tests repository"
+        uses: actions/checkout@v4
+        with:
+          repository: ${{github.repository}}
+          ref: ${{github.ref}}
+      - name: "Use node js"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: "Install dependencies"
+        run: npm ci
+      - name: "Run tests"
+        run: npx playwright test
+        env:
+          HTTP_CREDENTIALS_USERNAME: ${{secrets.HTTP_CREDENTIALS_USERNAME}}
+          HTTP_CREDENTIALS_PASSWORD: ${{secrets.HTTP_CREDENTIALS_PASSWORD}}
+          ENV: 'stage'
+      #      - name: "Upload artifacts"
+      #        if: failure()
+      #        uses: actions/upload-artifact@v3
+      #        with:
+      #          name: github-pages
+      #          path: playwright-report/
+      - name: Fix permissions
+        if: ${{ always() }}
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+      - name: Upload Pages artifact
+        if: ${{ always() }}
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: github-pages
+          path: playwright-report/
+
+  deploy:
+    if: ${{ always() }}
+    # Add a dependency to the build job
+    needs: [tests]
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3 # or specific "vX.X.X" version tag for this action
