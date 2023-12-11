@@ -17,8 +17,6 @@ export const FIRST_USER_CAR_RESPONSE_BODY = {
         }
 };
 
-export const userCarIDUpdate = 69221;
-
 export const USER_CARS_RESPONSE_BODY = {
     "status": "ok",
     "data": [

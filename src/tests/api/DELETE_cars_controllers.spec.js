@@ -1,6 +1,6 @@
 import {expect, test} from "@playwright/test";
 import {USER} from "../../data/users.js";
-import CarModel from "../../models/carModel.js";
+import CreateCarModel from "../../models/createCarModel.js";
 import ApiClient from "../../client/ApiClient.js";
 
 test.describe('Remove Cars', ()=>{
@@ -13,13 +13,10 @@ test.describe('Remove Cars', ()=>{
             "password": USER.password,
             "remember": false
         });
-    });
-    test.beforeEach(async ()=>{
-        const carModel = new CarModel({
+        const carModel = new CreateCarModel({
             carBrandId: 1, carModelId: 1, mileage: 888});
         const response = await client.cars.createCar(carModel);
         carId = response.data.data.id;
-
     });
     test('1: DELETE: remove the last user car', async()=>{
         const response = await client.cars.deleteCarById(carId);
@@ -27,5 +24,10 @@ test.describe('Remove Cars', ()=>{
         expect(response.data.status).toEqual('ok');
         const getResponse = await client.cars.getUserCarById(carId);
         expect(getResponse.status).toEqual(404);
+    });
+    test('2: DELETE invalid: non-existing carId', async()=>{
+        const response = await client.cars.deleteCarById('0000');
+
+        expect(response.data.status).toEqual('error');
     });
 })
