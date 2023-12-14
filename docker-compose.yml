@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  auto-tests:
+    container_name: 'e2e-tests'
+    environment:
+      HTTP_CREDENTIALS_USERNAME: ${HTTP_CREDENTIALS_USERNAME}
+      HTTP_CREDENTIALS_PASSWORD: ${HTTP_CREDENTIALS_PASSWORD}
+      CI: 'true'
+      ENV: ${ENV}
+    build:
+      context: .
