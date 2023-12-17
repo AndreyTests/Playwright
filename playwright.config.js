@@ -10,6 +10,10 @@ const config =  defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 2,
+  reporter: [
+    ['html', {open: process.env.CI ? 'never' : 'on-failure'}],
+    ['list']
+  ],
   use: {
     headless: true,
     httpCredentials: testConfig.httpCredentials,

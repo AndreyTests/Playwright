@@ -4,7 +4,7 @@
   "description": "Playwright testing",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
+    "test": "npx playwright test --project=api",
     "test:debug": "npx playwright test --debug",
     "test:positive": "npx playwright test -c ./playwright.config.positive.js",
     "test:negative": "npx playwright test -c ./playwright.config.negative.js",
