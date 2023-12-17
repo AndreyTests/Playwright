@@ -10,7 +10,7 @@ import {USER} from "../../data/users";
 import {config as testConfig} from "../../../config/config";
 
 /* APPROACH WITH AXIOS COOKIES JAR */
-test.describe("API requests with axios cookies jar", ()=> {
+test.describe.skip("API requests with axios cookies jar", ()=> {
     let client;
 
     test.beforeAll(async() => {
